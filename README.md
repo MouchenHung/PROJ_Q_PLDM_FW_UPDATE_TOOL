@@ -9,12 +9,12 @@ Package generator for pldm fw update.
 	  * pldm_fwup_pkg_creator: v1.0.0 - 2022/12/14
 
 ### Version:
-* pldm_update_pkg_gen
+pldm_update_pkg_gen
 - 1.0.0 - First commit - 2023/01/11
   - Feature: none
   - Bug: none
 
-* pldm_fwup_pkg_creator
+pldm_fwup_pkg_creator
 - 1.0.0 - First commit - 2022/12/14
   - Feature: none
   - Bug: none
