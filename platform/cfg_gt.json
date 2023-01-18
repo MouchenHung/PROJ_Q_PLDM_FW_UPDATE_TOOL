@@ -1,0 +1,89 @@
+{
+    "PlatformDescriptor": [
+        {
+            "DescriptorType" : 1,
+            "DescriptorData" : "0000A015"
+        },
+        {
+            "DescriptorType" : 65535,
+            "VendorDefinedDescriptorTitleString" : "Platform",
+            "VendorDefinedDescriptorData" : "GrandTeton"
+    
+        },
+        {
+            "DescriptorType" : 65535,
+            "VendorDefinedDescriptorTitleString" : "BoardID",
+            "VendorDefinedDescriptorData" : "SwitchBoard"
+        },
+        {
+            "DescriptorType" : 65535,
+            "VendorDefinedDescriptorTitleString" : "Stage",
+            "VendorDefinedDescriptorData" : "na"
+        }
+    ],
+    "SupportDevice" : [
+        {
+            "CompID" : [0],
+            "Vendor" : "aspeed",
+            "Device" : "ast1030",
+            "pkg_prefix" : "bic",
+            "pkg_suffix" : ".pldm"
+        },
+        {
+            "CompID" : [1,2],
+            "Vendor" : "reneses",
+            "Device" : "isl69259",
+            "pkg_prefix" : "vr",
+            "pkg_suffix" : ".pldm"
+        },
+        {
+            "CompID" : [1,2],
+            "Vendor" : "infineon",
+            "Device" : "xdpe12284c",
+            "pkg_prefix" : "vr",
+            "pkg_suffix" : ".pldm"
+        },
+        {
+            "CompID" : [1,2],
+            "Vendor" : "mps",
+            "Device" : "mp2971",
+            "pkg_prefix" : "vr",
+            "pkg_suffix" : ".pldm"
+        },
+        {
+            "CompID" : [3],
+            "Vendor" : "broadcom",
+            "Device" : "pex89000",
+            "pkg_prefix" : "pex",
+            "pkg_suffix" : ".pldm"
+        },
+        {
+            "CompID" : [4],
+            "Vendor" : "broadcom",
+            "Device" : "pex89000",
+            "pkg_prefix" : "pex",
+            "pkg_suffix" : ".pldm"
+        },
+        {
+            "CompID" : [5],
+            "Vendor" : "broadcom",
+            "Device" : "pex89000",
+            "pkg_prefix" : "pex",
+            "pkg_suffix" : ".pldm"
+        },
+        {
+            "CompID" : [6],
+            "Vendor" : "broadcom",
+            "Device" : "pex89000",
+            "pkg_prefix" : "pex",
+            "pkg_suffix" : ".pldm"
+        },
+        {
+            "CompID" : [7],
+            "Vendor" : "lattice",
+            "Device" : "LCMXO3-9400C",
+            "pkg_prefix" : "cpld",
+            "pkg_suffix" : ".pldm"
+        }
+    ]
+}

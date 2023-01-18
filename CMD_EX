@@ -1,0 +1,67 @@
+{{ APP INFO }}
+- Name: PLDM FW UPDATE PACKAGE TOOL
+- Description: Tools that used to generate package image for pldm fw update.
+- Release:
+	* pldm_update_pkg_gen:
+		- v1.1.0 - 2023/01/18
+			- Move platform config outside from code by creating folder 'platform'.
+			- Add key '-i' for image path list
+			- Support AUTO-GEN which could link with pldm_fwup_pkg_creator after json created.
+			- Fix list element could not include '-' bug.
+		- v1.0.0 - 2023/01/11
+			- First release
+	* pldm_fwup_pkg_creator:
+		- v1.0.0 - 2022/12/14
+			- Add MD5 at the end of package with 16bytes
+
+{{ DEFINITIONS }}
+- CUSTOM: Words that could be customized, ex: version, checksum.
+- PACKAGE_NAME: Output pldm fw update package name.
+- STAGE: poc/evt/dvt/pvt/mp
+- -->: input
+- <--: output
+
+{{ HOW TO USE }}
+- Project: GRAND TETON (Switch Board)
+- Support devices:
+	* BIC
+	--> python3 pldm_update_pkg_gen.py -p gt -s <STAGE> -c 0 -v aspeed_ast1030_<CUSTOM> -i <IMAGE>
+	<-- comp0_bic_aspeed_ast1030.pldm
+
+	* LATTICE LCMX03-9400C
+	--> python3 pldm_update_pkg_gen.py -p gt -s <STAGE> -c 7 -v lattice_LCMX03-9400C_<CUSTOM> -i <IMAGE>
+	<-- comp7_cpld_lattice_LCMXO3-9400C.pldm"
+
+	* BROADCAOM PEX89000
+	--> (all)  python3 pldm_update_pkg_gen.py -p gt -s <STAGE> -c 3 4 5 6
+			-v broadcom_pex89000_<CUSTOM> broadcom_pex89000_<CUSTOM> broadcom_pex89000_<CUSTOM> broadcom_pex89000_<CUSTOM>
+			-i <IMAGE0> <IMAGE1> <IMAGE2> <IMAGE3>
+	<-- (all)  default_package.pldm
+	--> (pex0) python3 pldm_update_pkg_gen.py -p gt -s <STAGE> -c 3 -v broadcom_pex89000_<CUSTOM> -i <IMAGE>
+	<-- (pex0) comp3_pex_broadcom_pex89000.pldm
+	--> (pex1) python3 pldm_update_pkg_gen.py -p gt -s <STAGE> -c 4 -v broadcom_pex89000_<CUSTOM> -i <IMAGE>
+	<-- (pex1) comp4_pex_broadcom_pex89000.pldm
+	--> (pex2) python3 pldm_update_pkg_gen.py -p gt -s <STAGE> -c 5 -v broadcom_pex89000_<CUSTOM> -i <IMAGE>
+	<-- (pex2) comp5_pex_broadcom_pex89000.pldm
+	--> (pex3) python3 pldm_update_pkg_gen.py -p gt -s <STAGE> -c 6 -v broadcom_pex89000_<CUSTOM> -i <IMAGE>
+	<-- (pex3) comp6_pex_broadcom_pex89000.pldm
+ 
+	* Renesas isl69259
+	--> (vr0) python3 pldm_update_pkg_gen.py -p gt -s <STAGE> -c 1 -v renesas_isl69259_<CUSTOM> -i <IMAGE>
+	<-- (vr0) comp1_vr_renesas_isl69259.pldm
+	--> (vr1) python3 pldm_update_pkg_gen.py -p gt -s <STAGE> -c 2 -v renesas_isl69259_<CUSTOM> -i <IMAGE>
+	<-- (vr1) comp2_vr_renesas_isl69259.pldm
+
+	* MPS mp2971
+	--> (vr0) python3 pldm_update_pkg_gen.py -p gt -s <STAGE> -c 1 -v mps_mp2971_<CUSTOM> -i <IMAGE>
+	<-- (vr0) comp1_vr_mps_mp2971.pldm
+	--> (vr1) python3 pldm_update_pkg_gen.py -p gt -s <STAGE> -c 2 -v mps_mp2971_<CUSTOM> -i <IMAGE>
+	<-- (vr1) comp2_vr_mps_mp2971.pldm
+
+	* Infineon xdpe12284c
+	--> (vr0) python3 pldm_update_pkg_gen.py -p gt -s <STAGE> -c 1 -v infineon_xdpe12284c_<CUSTOM> -i <IMAGE>
+	<-- (vr0) comp1_vr_infineon_xdpe12284c.pldm
+	--> (vr1) python3 pldm_update_pkg_gen.py -p gt -s <STAGE> -c 2 -v infineon_xdpe12284c_<CUSTOM> -i <IMAGE>
+	<-- (vr1) comp2_vr_infineon_xdpe12284c.pldm
+
+

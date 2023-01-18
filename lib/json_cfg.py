@@ -6,6 +6,7 @@ Created on Fri Dec 25 16:06:03 2020
 @author: mouchen
 """
 import json, sys, os
+from wsgiref.util import request_uri
 sys.path.append(os.path.abspath("./lib"))
 from common_lib import Common_time
 
@@ -127,14 +128,19 @@ def TOOL_pldm_json_WR(mode, file, PC=[]):
 
             return PACKAGE_CONFIG
             
+def TOOL_pldm_plat_cfg_R(file):
+    with open(file) as json_file:
+        data = json.load(json_file)
+
+    PLATFORM_CONFIG = [
+        data['PlatformDescriptor'],
+        data['SupportDevice']
+    ]
+
+    return PLATFORM_CONFIG
 
 if __name__ == '__main__':
     CONFIG_FILE = "./test.json"
     TOOL_pldm_json_WR('w', CONFIG_FILE, PACKAGE_CONFIG)
     output = TOOL_pldm_json_WR('r', CONFIG_FILE, PACKAGE_CONFIG)
     print(output)
-
-    
-    
-    
-
