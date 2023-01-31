@@ -22,7 +22,7 @@ PKG_RELEASE_DATETIME = get_time(1)
 PKG_VER_STR = APP_NAME + " - " + APP_RELEASE_VER + " - " + APP_RELEASE_DATE
 
 PKG_HDR_INFO = {
-    "pkg_hdr_id" : "F018878CCB7D49439800A02F059ACA02",
+    "pkg_hdr_id" : "1244D2648D7D4718A030FC8A56587D5A",
     "pkg_hdr_format_ver" : 1,
     "pkg_release_datetime" : PKG_RELEASE_DATETIME,
     "pkg_ver_str" : PKG_VER_STR
