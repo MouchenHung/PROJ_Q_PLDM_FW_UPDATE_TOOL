@@ -10,6 +10,12 @@ Package generator for pldm fw update.
 
 ### Version:
 pldm_update_pkg_gen
+- 1.2.0 - Support EXE(user do not need to download python) - 2023/01/31
+  - Feature:
+  	- Change UUID from v1.0.x to v1.1.0
+	- Given release package only contains EXE file **pldm_update_pkg_gen**.
+  - Bug:
+  	- none
 - 1.1.0 - Support Auto-GEN - 2023/01/17
   - Feature:
   	- Move platform config outside from code by creating folder 'platform'.
@@ -18,8 +24,10 @@ pldm_update_pkg_gen
   - Bug:
   	- Fix list element could not include '-' bug.
 - 1.0.0 - First commit - 2023/01/11
-  - Feature: none
-  - Bug: none
+  - Feature:
+  	- none
+  - Bug:
+  	- none
 
 pldm_fwup_pkg_creator
 - 1.0.0 - First commit - 2022/12/14
@@ -43,12 +51,12 @@ pldm_fwup_pkg_creator
     - component_version: should follow project spec
     - component_image: binary image
 ```
-mouchen@mouchen-System-Product-Name: python3 pldm_update_pkg_gen.py -p gt -s pvt -c 0 -v GT_BIC_V?? -i GT_img.bin
+mouchen@mouchen-System-Product-Name: pldm_update_pkg_gen -p gt -s pvt -c 0 -v GT_BIC_V?? -i GT_img.bin
 ========================================================
 * APP name:    PLDM UPDATE PACKAGE GENERATOR
 * APP auth:    Mouchen
-* APP version: 1.1.0
-* APP date:    2023/01/17
+* APP version: 1.2.0
+* APP date:    2023/01/31
 * NOTE: This APP is based on pldm_fwup_pkg_creator.py
 ========================================================
 [STEP1]] Generate pldm config file
