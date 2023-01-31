@@ -57,6 +57,16 @@ class Common_file:
     def __init__(self):
         pass
 
+    def resource_path(self, relative_path):
+        """ Get absolute path to resource, works for dev and for PyInstaller """
+        try:
+            # PyInstaller creates a temp folder and stores path in _MEIPASS
+            base_path = sys._MEIPASS
+        except Exception:
+            base_path = os.path.abspath(".")
+
+        return os.path.join(base_path, relative_path)
+
     def list_dump(self, list, pre_msg=""):
         print(pre_msg + "[", end="")
         for i in range(len(list)):

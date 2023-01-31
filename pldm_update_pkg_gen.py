@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 
-import sys, subprocess
+import sys, subprocess, os
 
 import lib.json_cfg as json_lib
 from lib.common_lib import Common_msg, Common_file
 
 APP_NAME = "PLDM UPDATE PACKAGE GENERATOR"
 APP_AUTH = "Mouchen"
-APP_RELEASE_VER = "1.1.0"
-APP_RELEASE_DATE = "2023/01/17"
+APP_RELEASE_VER = "1.2.0"
+APP_RELEASE_DATE = "2023/01/31"
 
 PLATFORM_PATH = "./platform"
 CONFIG_FILE = "pldm_cfg.json"
@@ -29,6 +29,7 @@ comm_msg = Common_msg()
 msg_hdr_print = comm_msg.msg_hdr_print
 comm_file = Common_file()
 is_file_exist = comm_file.is_file_exist
+resource_path = comm_file.resource_path
 
 def APP_HELP():
     msg_hdr_print("n", "--------------------------------------------------------------------", "\n")
@@ -144,7 +145,7 @@ if __name__ == '__main__':
     DESC_INFO = []
     COMP_INFO = []
 
-    cfg_file = PLATFORM_PATH + '/' + "cfg_" + str(select_platform) + ".json"
+    cfg_file = resource_path(PLATFORM_PATH + "/cfg_" + str(select_platform) + ".json")
     if not is_file_exist(cfg_file):
         msg_hdr_print('e', "Can't find config file of platform " + str(select_platform))
         sys.exit(0)
@@ -195,7 +196,7 @@ if __name__ == '__main__':
     else:
         pkg_file_name = package_name_lst[0]
 
-    cmd_line = ["python3", "pldm_fwup_pkg_creator.py", pkg_file_name, CONFIG_FILE]
+    cmd_line = ["python3", resource_path("pldm_fwup_pkg_creator.py"), pkg_file_name, CONFIG_FILE]
     for img in select_comp_img_lst:
         cmd_line.append(img)
 
