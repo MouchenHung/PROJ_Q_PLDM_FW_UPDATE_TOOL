@@ -16,17 +16,22 @@ from bitarray.util import ba2int
 
 import hashlib
 
-APP_VER = "1.0.0"
-APP_DATE = "2022/12/14"
+APP_NAME = "PLDM FWUPDATE PACKAGE CREATOR"
+APP_RELEASE_VER = "1.0.0"
+APP_RELEASE_DATE = "2022/12/14"
 
 def APP_INFO_PRINT():
-    print("===============================================================")
-    print("* version: ", APP_VER)
-    print("* date:    ", APP_DATE)
-    print("* features:")
+    print("============================================================================================")
+    print("* APP name:    ", APP_NAME)
+    print("* APP auth:    ", "opensource")
+    print("* APP version: ", APP_RELEASE_VER)
+    print("* APP date:    ", APP_RELEASE_DATE)
+    print("* OEM features:")
     print("  1. Support string type for data in vendor defined descriptors.")
     print("  2. Support MD5 hex parsing to last 16 bytes.")
-    print("===============================================================")
+    print("* NOTE: ")
+    print("* 1. More detail, please check [https://github.com/openbmc/pldm/tree/master/tools/fw-update]")
+    print("============================================================================================")
 
 string_types = dict([
     ("Unknown", 0),
