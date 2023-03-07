@@ -10,6 +10,12 @@ Package generator for pldm fw update.
 
 ### Version:
 pldm_update_pkg_gen
+- 1.3.0 - Modify output package nameing format - 2023/03/07
+  - Feature:
+  	- Modify output package nameing format to **<project_name>** _ **<board_name>** _ **<component_version>** .pldm
+	- Add Board name option **-b**.
+  - Bug:
+  	- none
 - 1.2.0 - Support EXE(user do not need to download python) - 2023/01/31
   - Feature:
   	- Change UUID from v1.0.x to v1.1.0
@@ -44,32 +50,37 @@ pldm_fwup_pkg_creator
 
 ### Usage
   - **STEP1. Create json config file**\
-  Format: python3 pldm_update_pkg_gen.py -p **<project_name>** -s **<project_stage>** -c **<component_id>** -v **<component_version>** -i **<component_image>**
+  Format: python3 pldm_update_pkg_gen.py -p **<project_name>** -b **<board_name>** -s **<project_stage>** -c **<component_id>** -v **<component_version>** -i **<component_image>**
     - project_name: Project name
+    - board_name: Board name
     - project_stage: poc/evt/dvt/pvt/mp
     - component_id: should follow project spec
     - component_version: should follow project spec
     - component_image: binary image
 ```
-mouchen@mouchen-System-Product-Name: pldm_update_pkg_gen -p gt -s pvt -c 0 -v GT_BIC_V?? -i GT_img.bin
+mouchen@mouchen-System-Product-Name: pldm_update_pkg_gen -p gt -b swb -s pvt -c 0 -v GT_BIC_V?? -i GT_img.bin
 ========================================================
 * APP name:    PLDM UPDATE PACKAGE GENERATOR
 * APP auth:    Mouchen
-* APP version: 1.2.0
-* APP date:    2023/01/31
+* APP version: 1.3.0
+* APP date:    2023/03/07
 * NOTE: This APP is based on pldm_fwup_pkg_creator.py
 ========================================================
 [STEP1]] Generate pldm config file
 --> SUCCESS!
 
 [STEP2]] Generate pldm package file
-===============================================================
-* version:  1.0.0
-* date:     2022/12/14
-* features:
+============================================================================================
+* APP name:     PLDM FWUPDATE PACKAGE CREATOR
+* APP auth:     opensource
+* APP version:  1.0.0
+* APP date:     2022/12/14
+* OEM features:
   1. Support string type for data in vendor defined descriptors.
   2. Support MD5 hex parsing to last 16 bytes.
-===============================================================
+* NOTE: 
+* 1. More detail, please check [https://github.com/openbmc/pldm/tree/master/tools/fw-update]
+============================================================================================
 --> SUCCESS!
 ```
 
