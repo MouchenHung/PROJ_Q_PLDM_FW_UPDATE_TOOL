@@ -23,7 +23,7 @@ PKG_VER_STR = APP_NAME + " - " + APP_RELEASE_VER + " - " + APP_RELEASE_DATE
 
 PKG_HDR_INFO = {
     "pkg_hdr_id" : "1244D2648D7D4718A030FC8A56587D5A",
-    "pkg_hdr_format_ver" : 1,
+    "pkg_hdr_format_ver" : 2,
     "pkg_release_datetime" : PKG_RELEASE_DATETIME,
     "pkg_ver_str" : PKG_VER_STR
 }
