@@ -3,6 +3,9 @@
 - Description: Tools that used to generate package image for pldm fw update.
 - Release:
 	* pldm_update_pkg_gen:
+		- v1.3.0 - 2023/03/07
+			- Add Board name option '-b'
+			- Modify output package nameing format to <project_name>_<board_name>_<component_version>.pldm
 		- v1.2.0 - 2023/01/31
 			- Change UUID from v1.0.x to v1.1.0
 			- Given release package only contains EXE file pldm_update_pkg_gen
@@ -28,43 +31,50 @@
 - Project: GRAND TETON (Switch Board)
 	- Support devices:
 		* BIC
-		--> pldm_update_pkg_gen -p gt -s <STAGE> -c 0 -v aspeed_ast1030_<CUSTOM> -i <IMAGE>
-		<-- comp0_bic_aspeed_ast1030.pldm
+		--> pldm_update_pkg_gen -p gt -b swb -s <STAGE> -c 2 -v ast1030_<CUSTOM> -i <IMAGE>
+		<-- gt_swb_ast1030_<CUSTOM>.pldm
 
 		* LATTICE LCMX03-9400C
-		--> pldm_update_pkg_gen -p gt -s <STAGE> -c 7 -v lattice_LCMX03-9400C_<CUSTOM> -i <IMAGE>
-		<-- comp7_cpld_lattice_LCMXO3-9400C.pldm"
+		--> pldm_update_pkg_gen -p gt -b swb -s <STAGE> -c 7 -v LCMX03-9400C_<CUSTOM> -i <IMAGE>
+		<-- gt_swb_LCMX03-9400C_<CUSTOM>.pldm"
 
 		* BROADCAOM PEX89000
-		--> (all)  pldm_update_pkg_gen -p gt -s <STAGE> -c 3 4 5 6
+		--> (all)  pldm_update_pkg_gen -p gt -s <STAGE>
+				-c 3 4 5 6
 				-v broadcom_pex89000_<CUSTOM> broadcom_pex89000_<CUSTOM> broadcom_pex89000_<CUSTOM> broadcom_pex89000_<CUSTOM>
 				-i <IMAGE0> <IMAGE1> <IMAGE2> <IMAGE3>
 		<-- (all)  default_package.pldm
-		--> (pex0) pldm_update_pkg_gen -p gt -s <STAGE> -c 3 -v broadcom_pex89000_<CUSTOM> -i <IMAGE>
-		<-- (pex0) comp3_pex_broadcom_pex89000.pldm
-		--> (pex1) pldm_update_pkg_gen -p gt -s <STAGE> -c 4 -v broadcom_pex89000_<CUSTOM> -i <IMAGE>
-		<-- (pex1) comp4_pex_broadcom_pex89000.pldm
-		--> (pex2) pldm_update_pkg_gen -p gt -s <STAGE> -c 5 -v broadcom_pex89000_<CUSTOM> -i <IMAGE>
-		<-- (pex2) comp5_pex_broadcom_pex89000.pldm
-		--> (pex3) pldm_update_pkg_gen -p gt -s <STAGE> -c 6 -v broadcom_pex89000_<CUSTOM> -i <IMAGE>
-		<-- (pex3) comp6_pex_broadcom_pex89000.pldm
+
+		--> (pex0) pldm_update_pkg_gen -p gt -b swb -s <STAGE> -c 3 -v pex89000_<CUSTOM> -i <IMAGE>
+		<-- (pex0) gt_swb_pex89000_<CUSTOM>.pldm
+
+		--> (pex1) pldm_update_pkg_gen -p gt -b swb -s <STAGE> -c 4 -v pex89000_<CUSTOM> -i <IMAGE>
+		<-- (pex1) gt_swb_pex89000_<CUSTOM>.pldm
+
+		--> (pex2) pldm_update_pkg_gen -p gt -b swb -s <STAGE> -c 5 -v pex89000_<CUSTOM> -i <IMAGE>
+		<-- (pex2) gt_swb_pex89000_<CUSTOM>.pldm
+
+		--> (pex3) pldm_update_pkg_gen -p gt -b swb -s <STAGE> -c 6 -v pex89000_<CUSTOM> -i <IMAGE>
+		<-- (pex3) gt_swb_pex89000_<CUSTOM>.pldm
 	 
 		* Renesas isl69259
-		--> (vr0) pldm_update_pkg_gen -p gt -s <STAGE> -c 1 -v renesas_isl69259_<CUSTOM> -i <IMAGE>
-		<-- (vr0) comp1_vr_renesas_isl69259.pldm
-		--> (vr1) pldm_update_pkg_gen -p gt -s <STAGE> -c 2 -v renesas_isl69259_<CUSTOM> -i <IMAGE>
-		<-- (vr1) comp2_vr_renesas_isl69259.pldm
+		--> (vr0) pldm_update_pkg_gen -p gt -b swb -s <STAGE> -c 0 -v isl69259_<CUSTOM> -i <IMAGE>
+		<-- (vr0) gt_swb_isl69259_<CUSTOM>.pldm
+
+		--> (vr1) pldm_update_pkg_gen -p gt -b swb -s <STAGE> -c 1 -v isl69259_<CUSTOM> -i <IMAGE>
+		<-- (vr1) gt_swb_isl69259_<CUSTOM>.pldm
 
 		* MPS mp2971
-		--> (vr0) pldm_update_pkg_gen -p gt -s <STAGE> -c 1 -v mps_mp2971_<CUSTOM> -i <IMAGE>
-		<-- (vr0) comp1_vr_mps_mp2971.pldm
-		--> (vr1) pldm_update_pkg_gen -p gt -s <STAGE> -c 2 -v mps_mp2971_<CUSTOM> -i <IMAGE>
-		<-- (vr1) comp2_vr_mps_mp2971.pldm
+		--> (vr0) pldm_update_pkg_gen -p gt -b swb -s <STAGE> -c 0 -v mp2971_<CUSTOM> -i <IMAGE>
+		<-- (vr0) gt_swb_mp2971_<CUSTOM>.pldm
+
+		--> (vr1) pldm_update_pkg_gen -p gt -b swb -s <STAGE> -c 1 -v mp2971_<CUSTOM> -i <IMAGE>
+		<-- (vr1) gt_swb_mp2971_<CUSTOM>.pldm
 
 		* Infineon xdpe12284c
-		--> (vr0) pldm_update_pkg_gen -p gt -s <STAGE> -c 1 -v infineon_xdpe12284c_<CUSTOM> -i <IMAGE>
-		<-- (vr0) comp1_vr_infineon_xdpe12284c.pldm
-		--> (vr1) pldm_update_pkg_gen -p gt -s <STAGE> -c 2 -v infineon_xdpe12284c_<CUSTOM> -i <IMAGE>
-		<-- (vr1) comp2_vr_infineon_xdpe12284c.pldm
+		--> (vr0) pldm_update_pkg_gen -p gt -b swb -s <STAGE> -c 0 -v xdpe12284c_<CUSTOM> -i <IMAGE>
+		<-- (vr0) gt_swb_xdpe12284c_<CUSTOM>.pldm
 
+		--> (vr1) pldm_update_pkg_gen -p gt -b swb -s <STAGE> -c 1 -v xdpe12284c_<CUSTOM> -i <IMAGE>
+		<-- (vr1) gt_swb_xdpe12284c_<CUSTOM>.pldm
 
