@@ -6,7 +6,7 @@ Created on Tue Nov 22 09:42:43 2022
 @note: none
 """
 
-import sys, os, time
+import sys, os, time, hashlib
 
 class Common_msg:
     def __init__(self):
@@ -141,6 +141,42 @@ class Common_file:
             new_lst.append(list[i])
 
         return new_lst
+
+    def get_md5_str_from_file(self, file_path) -> str:
+        hash_md5 = hashlib.md5()
+
+        with open(file_path, "rb") as image:
+            for chunk in iter(lambda: image.read(4096), b""):
+                hash_md5.update(chunk)
+
+        return hash_md5.hexdigest()
+
+    def get_md5_str_from_file_list(self, file_path_list) -> str:
+        hash_md5 = hashlib.md5()
+
+        for file_path in file_path_list:
+            with open(file_path, "rb") as image:
+                for chunk in iter(lambda: image.read(4096), b""):
+                    hash_md5.update(chunk)
+
+        return hash_md5.hexdigest()
+
+    def get_md5_hex_from_file(self, file_path_list):
+        comb_data = []
+        md5str = self.get_md5_str_from_file_list(file_path_list)
+        for i in range( 0, 32, 2 ):
+            comb_data.append( int(md5str[i] + md5str[i+1], 16) )
+
+        return comb_data
+
+    def add_md5_to_end_of_file(self, output_img_path):
+        comb_data = []
+        md5str = self.get_md5_str_from_file(output_img_path)
+        for i in range( 0, 32, 2 ):
+            comb_data.append( int(md5str[i] + md5str[i+1], 16) )
+
+        with open(output_img_path, 'ab') as f:
+            f.write(bytearray(comb_data))
 
 class Common_time:
     def __init__(self):
