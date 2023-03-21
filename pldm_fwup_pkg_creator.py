@@ -17,8 +17,8 @@ from bitarray.util import ba2int
 import hashlib
 
 APP_NAME = "PLDM FWUPDATE PACKAGE CREATOR"
-APP_RELEASE_VER = "1.0.0"
-APP_RELEASE_DATE = "2022/12/14"
+APP_RELEASE_VER = "1.1.0"
+APP_RELEASE_DATE = "2023/03/21"
 
 def APP_INFO_PRINT():
     print("============================================================================================")
@@ -28,7 +28,6 @@ def APP_INFO_PRINT():
     print("* APP date:    ", APP_RELEASE_DATE)
     print("* OEM features:")
     print("  1. Support string type for data in vendor defined descriptors.")
-    print("  2. Support MD5 hex parsing to last 16 bytes.")
     print("* NOTE: ")
     print("* 1. More detail, please check [https://github.com/openbmc/pldm/tree/master/tools/fw-update]")
     print("============================================================================================")
@@ -520,25 +519,6 @@ def append_component_images(pldm_fw_up_pkg, image_files):
             for line in file:
                 pldm_fw_up_pkg.write(line)
 
-def get_md5_from_file(file_path) -> str:
-    hash_md5 = hashlib.md5()
-
-    with open(file_path, "rb") as image:
-        for chunk in iter(lambda: image.read(4096), b""):
-            hash_md5.update(chunk)
-
-    return hash_md5.hexdigest()
-
-# mcadd: md5 handler
-def add_md5(output_img_path):
-    comb_data = []
-    md5str = get_md5_from_file(output_img_path)
-    for i in range( 0, 32, 2 ):
-        comb_data.append( int(md5str[i] + md5str[i+1], 16) )
-
-    with open(output_img_path, 'ab') as f:
-        f.write(bytearray(comb_data))
-
 def main():
     """Create PLDM FW update (DSP0267) package based on a JSON metadata file"""
     parser = argparse.ArgumentParser()
@@ -581,8 +561,8 @@ def main():
             append_component_images(pldm_fw_up_pkg, image_files)
             pldm_fw_up_pkg.close()
 
-        # mcadd: Add md5 for last 16 bytes
-        add_md5(args.pldmfwuppkgname)
+        # mcadd: Show package name
+        print("Please look for pldm package file [" + args.pldmfwuppkgname + "]")
 
     except BaseException:
         pldm_fw_up_pkg.close()
