@@ -7,8 +7,8 @@ from lib.common_lib import Common_msg, Common_file
 
 APP_NAME = "PLDM UPDATE PACKAGE GENERATOR"
 APP_AUTH = "Mouchen"
-APP_RELEASE_VER = "1.3.0"
-APP_RELEASE_DATE = "2023/03/07"
+APP_RELEASE_VER = "1.4.0"
+APP_RELEASE_DATE = "2023/03/21"
 
 PLATFORM_PATH = "./platform"
 CONFIG_FILE = "pldm_cfg.json"
@@ -30,6 +30,7 @@ msg_hdr_print = comm_msg.msg_hdr_print
 comm_file = Common_file()
 is_file_exist = comm_file.is_file_exist
 resource_path = comm_file.resource_path
+get_md5_str_from_file = comm_file.get_md5_str_from_file_list
 
 def APP_HELP():
     msg_hdr_print("n", "--------------------------------------------------------------------", "\n")
@@ -197,29 +198,45 @@ if __name__ == '__main__':
             "ComponentVersionString" : select_comp_version_lst[i]
         })
 
+    msg_hdr_print("n", "[STEP0] Calculate image(s) MD5")
+
+    comp_md5 = ""
+    for img in select_comp_img_lst:
+        if not is_file_exist(img):
+            msg_hdr_print('e', "Invalid given image [" + str(img) + "]")
+            sys.exit(0)
+
+    comp_md5 = get_md5_str_from_file(select_comp_img_lst)
+
+    DESC_INFO.append({
+        "DescriptorType" : 65535,
+        "VendorDefinedDescriptorTitleString" : "MD5",
+        "VendorDefinedDescriptorData" : comp_md5
+    })
+    msg_hdr_print("n", "Get MD5: " + comp_md5)
+    msg_hdr_print("n", "--> SUCCESS!")
+
     PACKAGE_CONFIG = [
         DESC_INFO,
         COMP_INFO
     ]
 
-    msg_hdr_print("n", "[STEP1]] Generate pldm config file")
+    msg_hdr_print("n", "\n[STEP1] Generate pldm config file")
     json_lib.TOOL_pldm_json_WR('w', CONFIG_FILE, PACKAGE_CONFIG)
-
+    msg_hdr_print("n", "PLDM json file [" + CONFIG_FILE + "] has been created!")
     msg_hdr_print("n", "--> SUCCESS!")
 
-    msg_hdr_print("n", "\n[STEP2]] Generate pldm package file")
+    msg_hdr_print("n", "\n[STEP2] Generate pldm package file")
 
     if len(select_comp_id_lst) != 1:
         pkg_file_name = DEF_PKG_FILE
-        msg_hdr_print("n", "Using default package file name " + DEF_PKG_FILE + ", cause of muti-comp case.")
+        msg_hdr_print("n", "Using default package file name [" + pkg_file_name + "], cause of muti-comp case.")
     else:
         pkg_file_name = package_name_lst[0]
+        msg_hdr_print("n", "Using package file name [" + pkg_file_name + "].")
 
     cmd_line = ["python3", resource_path("pldm_fwup_pkg_creator.py"), pkg_file_name, CONFIG_FILE]
     for img in select_comp_img_lst:
-        if not is_file_exist(img):
-            msg_hdr_print('e', "Invalid given image [" + str(img) + "]")
-            sys.exit(0)
         cmd_line.append(img)
 
     subprocess.run(cmd_line)
