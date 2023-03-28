@@ -76,8 +76,8 @@ mouchen@mouchen-System-Product-Name:~/$ python3 pldm_update_pkg_gen.py -p gt -b 
 ========================================================
 * APP name:    PLDM UPDATE PACKAGE GENERATOR
 * APP auth:    Mouchen
-* APP version: 1.4.0
-* APP date:    2023/03/21
+* APP version: 1.5.0
+* APP date:    2023/03/28
 * NOTE: This APP is based on pldm_fwup_pkg_creator.py
 ========================================================
 [STEP0] Calculate image(s) MD5
