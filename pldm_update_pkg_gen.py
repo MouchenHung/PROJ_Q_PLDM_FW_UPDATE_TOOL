@@ -253,7 +253,7 @@ if __name__ == '__main__':
         pkg_file_name = package_name_lst[0]
         msg_hdr_print("n", "Using package file name [" + pkg_file_name + "].")
 
-    cmd_line = ["python3", resource_path("pldm_fwup_pkg_creator.py"), pkg_file_name, CONFIG_FILE]
+    cmd_line = ["python", resource_path("pldm_fwup_pkg_creator.py"), pkg_file_name, CONFIG_FILE]
     for img in select_comp_img_lst:
         cmd_line.append(img)
 
