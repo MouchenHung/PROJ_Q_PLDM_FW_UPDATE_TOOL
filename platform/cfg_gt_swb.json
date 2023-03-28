@@ -26,54 +26,42 @@
             "CompID" : [2],
             "Vendor" : "aspeed",
             "Device" : "ast1030",
+            "CheckSum" : "n",
             "pkg_suffix" : ".pldm"
         },
         {
             "CompID" : [0,1],
             "Vendor" : "reneses",
             "Device" : "isl69259",
+            "CheckSum" : "y",
             "pkg_suffix" : ".pldm"
         },
         {
             "CompID" : [0,1],
             "Vendor" : "infineon",
             "Device" : "xdpe12284c",
+            "CheckSum" : "y",
             "pkg_suffix" : ".pldm"
         },
         {
             "CompID" : [0,1],
             "Vendor" : "mps",
             "Device" : "mp2971",
+            "CheckSum" : "y",
             "pkg_suffix" : ".pldm"
         },
         {
-            "CompID" : [3],
+            "CompID" : [3,4,5,6],
             "Vendor" : "broadcom",
             "Device" : "pex89000",
-            "pkg_suffix" : ".pldm"
-        },
-        {
-            "CompID" : [4],
-            "Vendor" : "broadcom",
-            "Device" : "pex89000",
-            "pkg_suffix" : ".pldm"
-        },
-        {
-            "CompID" : [5],
-            "Vendor" : "broadcom",
-            "Device" : "pex89000",
-            "pkg_suffix" : ".pldm"
-        },
-        {
-            "CompID" : [6],
-            "Vendor" : "broadcom",
-            "Device" : "pex89000",
+            "CheckSum" : "n",
             "pkg_suffix" : ".pldm"
         },
         {
             "CompID" : [7],
             "Vendor" : "lattice",
             "Device" : "LCMXO3-9400C",
+            "CheckSum" : "n",
             "pkg_suffix" : ".pldm"
         }
     ]

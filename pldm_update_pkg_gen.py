@@ -7,8 +7,8 @@ from lib.common_lib import Common_msg, Common_file
 
 APP_NAME = "PLDM UPDATE PACKAGE GENERATOR"
 APP_AUTH = "Mouchen"
-APP_RELEASE_VER = "1.4.0"
-APP_RELEASE_DATE = "2023/03/21"
+APP_RELEASE_VER = "1.5.0"
+APP_RELEASE_DATE = "2023/03/28"
 
 PLATFORM_PATH = "./platform"
 CONFIG_FILE = "pldm_cfg.json"
@@ -42,11 +42,11 @@ def APP_HELP():
     msg_hdr_print("n", "-s      Stage select.")
     msg_hdr_print("n", "          [poc/evt/dvt/pvt/mp]")
     msg_hdr_print("n", "-c      Component id select.")
-    msg_hdr_print("n", "          Please follow spec, could be list.")
+    msg_hdr_print("n", "          Please follow spec, could be list(-c 1 2).")
     msg_hdr_print("n", "-v      Component version string select.")
-    msg_hdr_print("n", "          Please follow spec, could be list.")
+    msg_hdr_print("n", '          Please follow spec, could be list(-v "ver1" "ver2").')
     msg_hdr_print("n", "-i      Component image select.")
-    msg_hdr_print("n", "          Please follow spec, could be list.")
+    msg_hdr_print("n", "          Please follow spec, could be list(-i ./img1 ./img2).")
     msg_hdr_print("n", "")
     msg_hdr_print("n", "--------------------------------------------------------------------")
 
@@ -59,6 +59,17 @@ def APP_HEADER():
     msg_hdr_print("n", "* NOTE: This APP is based on pldm_fwup_pkg_creator.py")
     msg_hdr_print("n", "========================================================")
 
+def PLAT_CheckVRChecksum(str, byte_num):
+    if len(str) != byte_num*2:
+        return False
+
+    for c in str:
+        try:
+            int(c, 16)
+        except:
+            return False
+
+    return True
 class APP_ARG():
     def __init__(self, argv):
         self.argv = argv
@@ -125,7 +136,7 @@ class APP_ARG():
                             self.comp_img_lst.append(self.argv[j])
                     i += len(self.comp_img_lst)
                     collect_flag[5] = 1
-        
+
         for flag in collect_flag:
             if flag == 0:
                 msg_hdr_print('e', "Input argments lost.")
@@ -144,7 +155,7 @@ if __name__ == '__main__':
         app_arg = APP_ARG(sys.argv)
         if app_arg.arg_parsing() == 1:
             msg_hdr_print('e', "Input argments error.")
-            sys.exit(0)
+            sys.exit(1)
         select_platform = app_arg.platform_select
         select_board = app_arg.board_select
         select_stage = app_arg.stage_select
@@ -153,7 +164,7 @@ if __name__ == '__main__':
         select_comp_img_lst = app_arg.comp_img_lst
     else:
         APP_HELP()
-        sys.exit(0)
+        sys.exit(1)
 
     PACKAGE_CONFIG = []
     DESC_INFO = []
@@ -172,7 +183,7 @@ if __name__ == '__main__':
     except:
         msg_hdr_print('e', "Invalid given stage [" + str(select_stage) + "]")
         APP_HELP()
-        sys.exit(0)
+        sys.exit(1)
 
     package_name_lst = []
     found_verify_flag = 0
@@ -180,15 +191,22 @@ if __name__ == '__main__':
         for comp in PLAT_INFO[1]:
             if select_comp_id_lst[i] in comp["CompID"]:
                 version_prefix = comp["Device"]
-                if version_prefix in select_comp_version_lst[i]:
+                given_prefix = select_comp_version_lst[i].split(' ')[0]
+                given_suffix = select_comp_version_lst[i].split(' ')[-1]
+                if given_prefix == version_prefix:
                     found_verify_flag = 1
+
+                    if comp["CheckSum"] == "y":
+                        if PLAT_CheckVRChecksum(given_suffix, 4) == False:
+                            msg_hdr_print('e', "Component #" + str(select_comp_id_lst[i]) + " additional CheckSum string [" + given_suffix + "] at the end of version got error!")
+                            sys.exit(1)
                     break
         
         if not found_verify_flag:
             msg_hdr_print('e', "Can't find support device by given component version [" + str(select_comp_version_lst[i]) + "]")
-            sys.exit(0)
+            sys.exit(1)
 
-        package_name_lst.append(str(select_platform) + "_" + str(select_board) + "_" + str(select_comp_version_lst[i]) + comp["pkg_suffix"])
+        package_name_lst.append(str(select_platform) + "_" + str(select_board) + "_" + str(select_comp_version_lst[i]).replace(" ", "_") + comp["pkg_suffix"])
 
         COMP_INFO.append({
             "ComponentClassification" : OEM_KEY,
@@ -204,13 +222,13 @@ if __name__ == '__main__':
     for img in select_comp_img_lst:
         if not is_file_exist(img):
             msg_hdr_print('e', "Invalid given image [" + str(img) + "]")
-            sys.exit(0)
+            sys.exit(1)
 
     comp_md5 = get_md5_str_from_file(select_comp_img_lst)
 
     DESC_INFO.append({
         "DescriptorType" : 65535,
-        "VendorDefinedDescriptorTitleString" : "MD5",
+        "VendorDefinedDescriptorTitleString" : "Image MD5",
         "VendorDefinedDescriptorData" : comp_md5
     })
     msg_hdr_print("n", "Get MD5: " + comp_md5)
