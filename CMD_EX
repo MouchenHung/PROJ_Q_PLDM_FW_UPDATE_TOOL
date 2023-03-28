@@ -3,16 +3,18 @@
 - Description: Tools that used to generate package image for pldm fw update.
 - Release:
 	* pldm_update_pkg_gen:
-		- v1.5.0 - 2023/03/28
+		- v1.5.0 - 2023/03/28 (have PACKAGE)
 			- Modify version parsing and VR version should add CheckSum
+			- Package support OS: Linux and Windows
 		- v1.4.0 - 2023/03/21
 			- Modify MD5 feature from Whole package to images only, and set it to Descriptor area
 		- v1.3.0 - 2023/03/07
 			- Add Board name option '-b'
 			- Modify output package nameing format to <project_name>_<board_name>_<component_version>.pldm
-		- v1.2.0 - 2023/01/31
+		- v1.2.0 - 2023/01/31 (have PACKAGE)
 			- Change UUID from v1.0.x to v1.1.0
 			- Given release package only contains EXE file pldm_update_pkg_gen
+			- Package support OS: Linux
 		- v1.1.0 - 2023/01/17
 			- Move platform config outside from code by creating folder 'platform'.
 			- Add key '-i' for image path list
@@ -27,9 +29,14 @@
 			- Add MD5 at the end of package with 16bytes
 
 {{ DEFINITIONS }}
-- CUSTOM: Words that could be customized, ex: version, checksum.
-- PACKAGE_NAME: Output pldm fw update package name.
-- STAGE: poc/evt/dvt/pvt/mp
+- <CMD_PREFIX>   Command's first word
+		 - Python:  python pldm_update_pkg_gen.py
+		 - Windows: pldm_update_pkg_gen.exe
+		 - Linux:   ./pldm_update_pkg_gen
+- <PACKAGE_NAME> Output pldm fw update package name.
+- <STAGE>        poc/evt/dvt/pvt/mp
+- <CUSTOM>       Words that could be customized, ex: version...
+- <CHECKSUM>     FW checksum
 - -->: input
 - <--: output
 
@@ -37,50 +44,50 @@
 - Project: GRAND TETON (Switch Board)
 	- Support devices:
 		* BIC
-		--> pldm_update_pkg_gen -p gt -b swb -s <STAGE> -c 2 -v "ast1030 <CUSTOM>" -i <IMAGE>
+		--> <CMD_PREFIX> -p gt -b swb -s <STAGE> -c 2 -v "ast1030 <CUSTOM>" -i <IMAGE>
 		<-- gt_swb_ast1030_<CUSTOM>.pldm
 
 		* LATTICE LCMX03-9400C
-		--> pldm_update_pkg_gen -p gt -b swb -s <STAGE> -c 7 -v "LCMX03-9400C <CUSTOM>" -i <IMAGE>
+		--> <CMD_PREFIX> -p gt -b swb -s <STAGE> -c 7 -v "LCMX03-9400C <CUSTOM>" -i <IMAGE>
 		<-- gt_swb_LCMX03-9400C_<CUSTOM>.pldm"
 
 		* BROADCAOM PEX89000
-		--> (all)  pldm_update_pkg_gen -p gt -s <STAGE>
+		--> (all)  <CMD_PREFIX> -p gt -s <STAGE>
 				-c 3 4 5 6
 				-v "pex89000 <CUSTOM>" "pex89000 <CUSTOM>" "pex89000 <CUSTOM>" "pex89000 <CUSTOM>"
 				-i <IMAGE0> <IMAGE1> <IMAGE2> <IMAGE3>
 		<-- (all)  default_package.pldm
 
-		--> (pex0) pldm_update_pkg_gen -p gt -b swb -s <STAGE> -c 3 -v "pex89000 <CUSTOM>" -i <IMAGE>
+		--> (pex0) <CMD_PREFIX> -p gt -b swb -s <STAGE> -c 3 -v "pex89000 <CUSTOM>" -i <IMAGE>
 		<-- (pex0) gt_swb_pex89000_<CUSTOM>.pldm
 
-		--> (pex1) pldm_update_pkg_gen -p gt -b swb -s <STAGE> -c 4 -v "pex89000 <CUSTOM>" -i <IMAGE>
+		--> (pex1) <CMD_PREFIX> -p gt -b swb -s <STAGE> -c 4 -v "pex89000 <CUSTOM>" -i <IMAGE>
 		<-- (pex1) gt_swb_pex89000_<CUSTOM>.pldm
 
-		--> (pex2) pldm_update_pkg_gen -p gt -b swb -s <STAGE> -c 5 -v "pex89000 <CUSTOM>" -i <IMAGE>
+		--> (pex2) <CMD_PREFIX> -p gt -b swb -s <STAGE> -c 5 -v "pex89000 <CUSTOM>" -i <IMAGE>
 		<-- (pex2) gt_swb_pex89000_<CUSTOM>.pldm
 
-		--> (pex3) pldm_update_pkg_gen -p gt -b swb -s <STAGE> -c 6 -v "pex89000 <CUSTOM>" -i <IMAGE>
+		--> (pex3) <CMD_PREFIX> -p gt -b swb -s <STAGE> -c 6 -v "pex89000 <CUSTOM>" -i <IMAGE>
 		<-- (pex3) gt_swb_pex89000_<CUSTOM>.pldm
 	 
 		* Renesas isl69259
-		--> (vr0) pldm_update_pkg_gen -p gt -b swb -s <STAGE> -c 0 -v "isl69259 <CUSTOM> <CHECKSUM>" -i <IMAGE>
+		--> (vr0) <CMD_PREFIX> -p gt -b swb -s <STAGE> -c 0 -v "isl69259 <CUSTOM> <CHECKSUM>" -i <IMAGE>
 		<-- (vr0) gt_swb_isl69259_<CUSTOM>_<CHECKSUM>.pldm
 
-		--> (vr1) pldm_update_pkg_gen -p gt -b swb -s <STAGE> -c 1 -v "isl69259 <CUSTOM> <CHECKSUM>" -i <IMAGE>
+		--> (vr1) <CMD_PREFIX> -p gt -b swb -s <STAGE> -c 1 -v "isl69259 <CUSTOM> <CHECKSUM>" -i <IMAGE>
 		<-- (vr1) gt_swb_isl69259_<CUSTOM>_<CHECKSUM>.pldm
 
 		* MPS mp2971
-		--> (vr0) pldm_update_pkg_gen -p gt -b swb -s <STAGE> -c 0 -v "mp2971 <CUSTOM> <CHECKSUM>" -i <IMAGE>
+		--> (vr0) <CMD_PREFIX> -p gt -b swb -s <STAGE> -c 0 -v "mp2971 <CUSTOM> <CHECKSUM>" -i <IMAGE>
 		<-- (vr0) gt_swb_mp2971_<CUSTOM>_<CHECKSUM>.pldm
 
-		--> (vr1) pldm_update_pkg_gen -p gt -b swb -s <STAGE> -c 1 -v "mp2971 <CUSTOM> <CHECKSUM>" -i <IMAGE>
+		--> (vr1) <CMD_PREFIX> -p gt -b swb -s <STAGE> -c 1 -v "mp2971 <CUSTOM> <CHECKSUM>" -i <IMAGE>
 		<-- (vr1) gt_swb_mp2971_<CUSTOM>_<CHECKSUM>.pldm
 
 		* Infineon xdpe12284c
-		--> (vr0) pldm_update_pkg_gen -p gt -b swb -s <STAGE> -c 0 -v "xdpe12284c <CUSTOM> <CHECKSUM>" -i <IMAGE>
+		--> (vr0) <CMD_PREFIX> -p gt -b swb -s <STAGE> -c 0 -v "xdpe12284c <CUSTOM> <CHECKSUM>" -i <IMAGE>
 		<-- (vr0) gt_swb_xdpe12284c_<CUSTOM>_<CHECKSUM>.pldm
 
-		--> (vr1) pldm_update_pkg_gen -p gt -b swb -s <STAGE> -c 1 -v "xdpe12284c <CUSTOM> <CHECKSUM>" -i <IMAGE>
+		--> (vr1) <CMD_PREFIX> -p gt -b swb -s <STAGE> -c 1 -v "xdpe12284c <CUSTOM> <CHECKSUM>" -i <IMAGE>
 		<-- (vr1) gt_swb_xdpe12284c_<CUSTOM>_<CHECKSUM>.pldm
 
