@@ -4,12 +4,17 @@ Package generator for pldm fw update.
 ### Purpose:
     Tools that used to generate package image for pldm fw update.
 
-### First rlease date:
-    * pldm_update_pkg_gen: v1.0.0 - 2023/01/11
-    * pldm_fwup_pkg_creator: v1.0.0 - 2022/12/14
+### Latest rlease:
+    * pldm_update_pkg_gen: v1.4.0 - 2023/03/21
+    * pldm_fwup_pkg_creator: v1.1.0 - 2022/03/21
 
 ### Version:
-pldm_update_pkg_gen
+**[pldm_update_pkg_gen]**
+- 1.4.0 - Modify MD5 feature - 2023/03/21
+  - Feature:
+  	- Modify MD5 feature from Whole package to images only, and set it to Descriptor area.
+  - Bug:
+  	- none
 - 1.3.0 - Modify output package nameing format - 2023/03/07
   - Feature:
   	- Modify output package nameing format to **<project_name>** _ **<board_name>** _ **<component_version>** .pldm
@@ -35,7 +40,11 @@ pldm_update_pkg_gen
   - Bug:
   	- none
 
-pldm_fwup_pkg_creator
+**[pldm_fwup_pkg_creator]**
+- 1.1.0 - Remove MD5 - 2022/03/21
+  - Feature:
+  	- Follow pldm_update_pkg_gen v1.4.0.
+  - Bug: none
 - 1.0.0 - First commit - 2022/12/14
   - Feature:
   	- Add MD5 at the end of package with 16bytes.
@@ -58,32 +67,38 @@ pldm_fwup_pkg_creator
     - component_version: should follow project spec
     - component_image: binary image
 ```
-mouchen@mouchen-System-Product-Name: pldm_update_pkg_gen -p gt -b swb -s pvt -c 0 -v GT_BIC_V?? -i GT_img.bin
+mouchen@mouchen-System-Product-Name:~/$ python3 pldm_update_pkg_gen.py -p gt -b swb -s pvt -c 2 -v ast1030_??? -i bic_image/xxxxx.bin 
 ========================================================
 * APP name:    PLDM UPDATE PACKAGE GENERATOR
 * APP auth:    Mouchen
-* APP version: 1.3.0
-* APP date:    2023/03/07
+* APP version: 1.4.0
+* APP date:    2023/03/21
 * NOTE: This APP is based on pldm_fwup_pkg_creator.py
 ========================================================
-[STEP1]] Generate pldm config file
+[STEP0] Calculate image(s) MD5
+Get MD5: 592d20ee05ad09ab90aa2a5a0b62ac3a
 --> SUCCESS!
 
-[STEP2]] Generate pldm package file
+[STEP1] Generate pldm config file
+PLDM json file [pldm_cfg.json] has been created!
+--> SUCCESS!
+
+[STEP2] Generate pldm package file
+Using package file name [gt_swb_ast1030_???.pldm].
 ============================================================================================
 * APP name:     PLDM FWUPDATE PACKAGE CREATOR
 * APP auth:     opensource
-* APP version:  1.0.0
-* APP date:     2022/12/14
+* APP version:  1.1.0
+* APP date:     2023/03/21
 * OEM features:
   1. Support string type for data in vendor defined descriptors.
-  2. Support MD5 hex parsing to last 16 bytes.
 * NOTE: 
 * 1. More detail, please check [https://github.com/openbmc/pldm/tree/master/tools/fw-update]
 ============================================================================================
+Please look for pldm package file [gt_swb_ast1030_???.pldm]
 --> SUCCESS!
 ```
 
 ### Note
-- 1: none.
+- 1: More command examples, please look at CMD_EX.
 
