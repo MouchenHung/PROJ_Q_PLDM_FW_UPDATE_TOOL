@@ -5,11 +5,16 @@ Package generator for pldm fw update.
     Tools that used to generate package image for pldm fw update.
 
 ### Latest rlease:
-    * pldm_update_pkg_gen: v1.4.0 - 2023/03/21
-    * pldm_fwup_pkg_creator: v1.1.0 - 2022/03/21
+    * pldm_update_pkg_gen: v1.5.0 - 2023/03/28
+    * pldm_fwup_pkg_creator: v1.1.0 - 2023/03/21
 
 ### Version:
 **[pldm_update_pkg_gen]**
+- 1.5.0 - Modify version parsing - 2023/03/28
+  - Feature:
+  	- Modify version parsing and VR version should add CheckSum.
+  - Bug:
+  	- none
 - 1.4.0 - Modify MD5 feature - 2023/03/21
   - Feature:
   	- Modify MD5 feature from Whole package to images only, and set it to Descriptor area.
@@ -41,7 +46,7 @@ Package generator for pldm fw update.
   	- none
 
 **[pldm_fwup_pkg_creator]**
-- 1.1.0 - Remove MD5 - 2022/03/21
+- 1.1.0 - Remove MD5 - 2023/03/21
   - Feature:
   	- Follow pldm_update_pkg_gen v1.4.0.
   - Bug: none
@@ -67,7 +72,7 @@ Package generator for pldm fw update.
     - component_version: should follow project spec
     - component_image: binary image
 ```
-mouchen@mouchen-System-Product-Name:~/$ python3 pldm_update_pkg_gen.py -p gt -b swb -s pvt -c 2 -v ast1030_??? -i bic_image/xxxxx.bin 
+mouchen@mouchen-System-Product-Name:~/$ python3 pldm_update_pkg_gen.py -p gt -b swb -s pvt -c 2 -v "ast1030 ???" -i bic_image/xxxxx.bin 
 ========================================================
 * APP name:    PLDM UPDATE PACKAGE GENERATOR
 * APP auth:    Mouchen
