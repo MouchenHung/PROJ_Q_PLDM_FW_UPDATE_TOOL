@@ -178,6 +178,13 @@ class Common_file:
         with open(output_img_path, 'ab') as f:
             f.write(bytearray(comb_data))
 
+    def file_wr(self, file_path, file_type, flag, contents):
+        if file_type == "txt":
+            with open(file_path, flag) as f:
+                f.write(contents)
+        else:
+            print("flag ", flag, " not support yet!")
+
 class Common_time:
     def __init__(self):
         pass
