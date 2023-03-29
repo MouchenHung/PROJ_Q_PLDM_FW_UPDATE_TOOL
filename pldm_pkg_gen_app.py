@@ -104,7 +104,7 @@ class HowToUsePage(QMainWindow):
 
     def UI_openFileDialog(self):
         global HTU_FILE
-        f = open(HTU_FILE,'r')
+        f = open(resource_path(HTU_FILE),'r')
 
         with f:
             data = f.read()
@@ -208,7 +208,7 @@ class Main(QMainWindow, pldm_update_pkg_gen_ui.UI_MainPage):
             self.cb_board.addItem(board)
 
         cur_cfg_file = platform_cfg_prefix + self.cb_platform.currentText() + '_' + self.cb_board.currentText() + ".json"
-        PLAT_INFO = json_lib.TOOL_pldm_plat_cfg_R(cur_cfg_file)
+        PLAT_INFO = json_lib.TOOL_pldm_plat_cfg_R(resource_path(cur_cfg_file))
         COMP_INFO = PLAT_INFO[1]
 
         comp_id_lst = []
@@ -322,7 +322,7 @@ class Main(QMainWindow, pldm_update_pkg_gen_ui.UI_MainPage):
             print("Generate success! Please look at package file " + self.cb_platform.currentText() + "_" + self.cb_board.currentText() + "_" + self.le_compver.text().replace(" ", "_") + ".pldm")
 
 def MAIN_APP():
-    platform_cfg_lst = os.listdir(PLATFORM_PATH)
+    platform_cfg_lst = os.listdir(resource_path(PLATFORM_PATH))
 
     for cfg in platform_cfg_lst:
         cur_platform = cfg.split('_')[1]
