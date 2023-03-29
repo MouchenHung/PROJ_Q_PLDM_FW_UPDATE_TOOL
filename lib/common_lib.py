@@ -8,6 +8,14 @@ Created on Tue Nov 22 09:42:43 2022
 
 import sys, os, time, hashlib
 
+class System_ctrl:
+    def __init__(self):
+        # OS
+        self.os_name = sys.platform
+
+    def get_os(self):
+        return self.os_name
+
 class Common_msg:
     def __init__(self):
         # OS
@@ -55,6 +63,7 @@ class Common_msg:
 
 class Common_file:
     def __init__(self):
+        self.comm_time = Common_time()
         pass
 
     def resource_path(self, relative_path):
@@ -184,6 +193,15 @@ class Common_file:
                 f.write(contents)
         else:
             print("flag ", flag, " not support yet!")
+
+    def log_record(self, file_path, op, contents=""):
+        if op == "init":
+            self.file_wr(file_path, "txt", 'w', contents)
+        elif op == "append":
+            self.file_wr(file_path, "txt", 'a', "\n[" + self.comm_time.get_time(0) + "]\n")
+            self.file_wr(file_path, "txt", 'a', contents)
+        else:
+            print("op ", op, " not support yet!")
 
 class Common_time:
     def __init__(self):

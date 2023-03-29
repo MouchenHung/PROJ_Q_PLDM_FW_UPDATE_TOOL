@@ -1,0 +1,44 @@
+§ FEATURES
+	* v1.0.0 
+`	  (Follow pldm_update_pkg_gen v1.5.0)
+		 * Support status bar
+		 * Support multi-component generate
+		 * Support LOG record "./log.txt"
+		 * Support component version prefix auto-fill
+		 * Support component table clear
+		 * Support Linux and Windows
+
+§ USAGE
+	* STEP1. Select platform
+		 [gt] Grand Teton
+
+	* STEP2. Select board
+		 gt
+			[swb] switch board
+
+	* STEP3. Select stage
+		 [evt/dvt/pvt/mp]
+
+	* STEP4. Select component id
+		 Please reference to component id table from each platform documents.
+		 Note: List format is <id> <vendor> <chip name>
+
+	* STEP5. Fill up component version
+		 Component version prefix text will be automatic filled up while component id selected.
+		 Please input custom version string after it.
+		 Note: 'Space' is a seperated symbol between each section in version string.
+		       According to pldm_update_pkg_gen v1.5.0.
+
+	* STEP6. Browse for component image
+		 Press button "Browse" searching for image and press button "Insert" to add new component to table.
+
+	* STEP7. Repeating STEP4~STEP6 if trying to generate multi-component package.
+
+	* STEP8. Validate selected components info in the table and press "Generate" button to execute command.
+		 if success, status bar will print green text.
+		 if failed, status bar will print red text. You could look at ./log for more error messages.
+		 Note: If any component needed to be removed, please press button "del".
+
+§ NOTE
+	* Component table not allows duplicated id
+	* If you have any problem while using this APP, please report your situations and LOG file to us, thanks!

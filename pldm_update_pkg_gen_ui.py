@@ -155,7 +155,7 @@ class UI_MainPage(object):
 
     def retranslateUi(self, appname):
         _translate = QtCore.QCoreApplication.translate
-        appname.setWindowTitle(_translate("appname", "pldm fw package generator"))
+        appname.setWindowTitle(_translate("appname", "pldm package generator"))
         self.label.setText(_translate("appname", "Platform"))
         self.label_2.setText(_translate("appname", "Board"))
         self.label_3.setText(_translate("appname", "Stage"))
@@ -170,8 +170,8 @@ class UI_MainPage(object):
         self.label_8.setText(_translate("appname", "Status:"))
         self.lb_status.setText(_translate("appname", "<idle>"))
         self.menuhelp.setTitle(_translate("appname", "Help"))
-        self.ac_howtouse.setText(_translate("appname", "&How to use"))
-        self.ac_supportedplatform.setText(_translate("appname", "Supported Platform"))
+        self.ac_howtouse.setText(_translate("appname", "&Release note"))
+        self.ac_supportedplatform.setText(_translate("appname", "&Reserved"))
 
 
 if __name__ == "__main__":

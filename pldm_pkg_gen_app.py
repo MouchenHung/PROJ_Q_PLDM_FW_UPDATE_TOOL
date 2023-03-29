@@ -29,6 +29,9 @@ PLATFORM_PATH = "./platform"
 platform_cfg_prefix = PLATFORM_PATH + "/cfg_"
 LOG_FILE = "./log.txt"
 
+# How to use text file
+HTU_FILE = "./htu.txt"
+
 TABLE_DISPLAY_LST = [
     "id",
     "version",
@@ -51,6 +54,36 @@ img_lst = []
 
 cur_cfg_file = ""
 
+# ===================================================== HOW_TO_USE PAGE ====================================================
+class HowToUsePage(QMainWindow):
+    def __init__(self):
+        super(HowToUsePage, self).__init__()
+
+        self.setWindowTitle("Release Note")
+        self.setGeometry(0, 0, 1000, 1000)
+
+        self.TITLE = QLabel("<< Welcome to PLDM PACKAGE GENERATOR APP user guide >>", self)
+        self.TITLE.setGeometry(QtCore.QRect(0, 20, 1000, 20))
+
+        self.TITLE.setFont(QtGui.QFont('Times', 14))
+        self.TITLE.setAlignment(QtCore.Qt.AlignHCenter)
+
+        self.CONTENT = QLabel("§ USAGE", self)
+        self.CONTENT.setGeometry(QtCore.QRect(20, 40, 780, 980))
+        self.CONTENT.setFont(QtGui.QFont('Times', 12))
+        self.CONTENT.setAlignment(QtCore.Qt.AlignLeft)
+
+        self.UI_openFileDialog()
+
+    def UI_openFileDialog(self):
+        global HTU_FILE
+        f = open(HTU_FILE,'r')
+
+        with f:
+            data = f.read()
+            self.CONTENT.setText(data)
+
+# ===================================================== MAIN PAGE ====================================================
 class Main(QMainWindow, pldm_update_pkg_gen_ui.UI_MainPage):
     def __init__(self, parent=None):
         super(Main, self).__init__()
@@ -59,6 +92,9 @@ class Main(QMainWindow, pldm_update_pkg_gen_ui.UI_MainPage):
 
         # Set version
         self.lb_version.setText(VERSION_STR)
+
+        # Create sub-window
+        self.WINDOW_HTU = HowToUsePage()
 
         # Timmer config
         # TIMER1 | Check Starus report | 5sec
@@ -101,6 +137,7 @@ class Main(QMainWindow, pldm_update_pkg_gen_ui.UI_MainPage):
         self.pb_browse.clicked.connect(self.File_Browse)
         self.pb_generate.clicked.connect(self.Generate_Package)
         self.pb_delete.clicked.connect(self.UI_Remove_All_Component)
+        self.ac_howtouse.triggered.connect(self.UI_HowToUseWindowShow)
 
     def closeEvent(self, event):
         global APP_KILL
@@ -111,6 +148,9 @@ class Main(QMainWindow, pldm_update_pkg_gen_ui.UI_MainPage):
         fileName = QFileDialog.getOpenFileName(self,'Single File','./')[0]
         self.le_comppath.setText(fileName)
 
+    def UI_HowToUseWindowShow(self):
+        self.WINDOW_HTU.show()
+    
     # Task1 polling every 5 sec
     def TASK1_TIMER_normalStatus(self):
         if self.lb_status.text() != "< idle >":
