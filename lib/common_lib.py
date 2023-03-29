@@ -6,7 +6,7 @@ Created on Tue Nov 22 09:42:43 2022
 @note: none
 """
 
-import sys, os, time, hashlib
+import sys, os, time, hashlib, platform
 
 class System_ctrl:
     def __init__(self):
@@ -19,7 +19,7 @@ class System_ctrl:
 class Common_msg:
     def __init__(self):
         # OS
-        self.os_name = sys.platform
+        self.os_name = platform.system()
 
         # Color
         self.color_purple = '\033[95m'

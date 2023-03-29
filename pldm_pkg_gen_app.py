@@ -67,7 +67,7 @@ if platform_os == "Windows":
         print("Can't find exe file " + EXE_WIN_FILE)
         log_record(LOG_FILE, "append", "Can't find exe file " + EXE_WIN_FILE + "\n")
         sys.exit(1)
-elif platform_os == "linux":
+elif platform_os == "Linux":
     command_prefix = EXE_LINUX_FILE
     if not is_file_exist(EXE_LINUX_FILE):
         print("Can't find exe file " + EXE_LINUX_FILE)
