@@ -2,9 +2,9 @@
 
 from pickle import TRUE
 import sys, os, subprocess
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtGui
 import lib.json_cfg as json_lib
-from lib.common_lib import Common_msg, Common_file, Common_time
+from lib.common_lib import Common_file, Common_time, System_ctrl
 
 from PyQt5.QtWidgets import *
 from PyQt5 import QtCore, QtGui
@@ -13,12 +13,15 @@ import pldm_update_pkg_gen_ui
 comm_file = Common_file()
 is_file_exist = comm_file.is_file_exist
 resource_path = comm_file.resource_path
-file_wr = comm_file.file_wr
+log_record = comm_file.log_record
 
 comm_time = Common_time()
 get_time = comm_time.get_time
 
-command_prefix = "python pldm_update_pkg_gen.py"
+comm_sys = System_ctrl()
+platform_os = comm_sys.os_name
+
+DBG_EN = False
 
 # Version
 RELEASE_VER = "v1.0.0"
@@ -31,6 +34,10 @@ LOG_FILE = "./log.txt"
 
 # How to use text file
 HTU_FILE = "./htu.txt"
+
+# EXE file
+EXE_WIN_FILE = "pldm_update_pkg_gen.exe"
+EXE_LINUX_FILE = "./pldm_update_pkg_gen"
 
 TABLE_DISPLAY_LST = [
     "id",
@@ -53,6 +60,26 @@ version_lst = []
 img_lst = []
 
 cur_cfg_file = ""
+
+if platform_os == "Windows":
+    command_prefix = EXE_WIN_FILE
+    if not is_file_exist(EXE_WIN_FILE):
+        print("Can't find exe file " + EXE_WIN_FILE)
+        log_record(LOG_FILE, "append", "Can't find exe file " + EXE_WIN_FILE + "\n")
+        sys.exit(1)
+elif platform_os == "linux":
+    command_prefix = EXE_LINUX_FILE
+    if not is_file_exist(EXE_LINUX_FILE):
+        print("Can't find exe file " + EXE_LINUX_FILE)
+        log_record(LOG_FILE, "append", "Can't find exe file " + EXE_LINUX_FILE + "\n")
+        sys.exit(1)
+else:
+    print("Current os " + platform_os + " is not supported!")
+    log_record(LOG_FILE, "append", "Current os " + platform_os + " is not supported!\n")
+    sys.exit(1)
+
+if DBG_EN == True:
+    command_prefix = "python pldm_update_pkg_gen.py"
 
 # ===================================================== HOW_TO_USE PAGE ====================================================
 class HowToUsePage(QMainWindow):
@@ -287,9 +314,7 @@ class Main(QMainWindow, pldm_update_pkg_gen_ui.UI_MainPage):
         if a.returncode != 0:
             self.lb_status.setText("Generate failed! Please look at error log ["+ LOG_FILE +"]")
             self.lb_status.setStyleSheet("color: rgb(255, 0, 0)")
-
-            file_wr(LOG_FILE, "txt", 'a', "\n[" + get_time(0) + "]\n")
-            file_wr(LOG_FILE, "txt", 'a', res[0])
+            log_record(LOG_FILE, "append", res[0])
 
         else:
             self.lb_status.setText("Generate success! Please look at package file " + self.cb_platform.currentText() + "_" + self.cb_board.currentText() + "_" + self.le_compver.text().replace(" ", "_") + ".pldm")
