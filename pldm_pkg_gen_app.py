@@ -19,13 +19,13 @@ comm_time = Common_time()
 get_time = comm_time.get_time
 
 comm_sys = System_ctrl()
-platform_os = comm_sys.os_name
+platform_os = comm_sys.os_name.lower()
 
 DBG_EN = False
 
 # Version
-RELEASE_VER = "v1.0.0"
-RELEASE_DATE = "2023.03.27"
+RELEASE_VER = "v1.0.1"
+RELEASE_DATE = "2023.03.30"
 VERSION_STR = RELEASE_VER + " - " + RELEASE_DATE
 
 PLATFORM_PATH = "./platform"
@@ -61,13 +61,13 @@ img_lst = []
 
 cur_cfg_file = ""
 
-if platform_os == "Windows":
+if platform_os == "windows":
     command_prefix = EXE_WIN_FILE
     if not is_file_exist(EXE_WIN_FILE):
         print("Can't find exe file " + EXE_WIN_FILE)
         log_record(LOG_FILE, "append", "Can't find exe file " + EXE_WIN_FILE + "\n")
         sys.exit(1)
-elif platform_os == "Linux":
+elif platform_os == "linux":
     command_prefix = EXE_LINUX_FILE
     if not is_file_exist(EXE_LINUX_FILE):
         print("Can't find exe file " + EXE_LINUX_FILE)
