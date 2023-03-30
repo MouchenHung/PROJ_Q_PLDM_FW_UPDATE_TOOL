@@ -3,7 +3,10 @@
 - Description: Tools that used to generate package image for pldm fw update.
 - Release:
 	* pldm_update_pkg_gen:
-		- v1.5.0 - 2023/03/28 (have PACKAGE)
+		- v1.5.1 - 2023/03/30 (have PACKAGE)
+			- Modify Checksum position from the end of version to second part
+			- Change execute pldm_fwup_pkg_creator from python file to EXE file
+		- v1.5.0 - 2023/03/28
 			- Modify version parsing and VR version should add CheckSum
 			- Package support OS: Linux and Windows
 		- v1.4.0 - 2023/03/21
@@ -28,6 +31,45 @@
 		- v1.0.0 - 2022/12/14
 			- Add MD5 at the end of package with 16bytes
 
+{{ GENERATE EXE }}
+- Linux
+	* STEP1. Create "pldm_fwup_pkg_creator" EXE 
+		pyinstaller -F -w pldm_fwup_pkg_creator.py
+
+	* STEP2. Move "pldm_fwup_pkg_creator" from ./dist to ./
+		mv ./dist/pldm_fwup_pkg_creator ./
+
+	* STEP3. Create "pldm_update_pkg_gen" EXE
+		pyinstaller -F pldm_update_pkg_gen.py --add-data "platform/*.json:platform" --add-data "lib/*.py:." --add-data "pldm_fwup_pkg_creator:."
+
+	* STEP4. Create "pldm_pkg_gen_app" EXE
+		pyinstaller -F pldm_pkg_gen_app.py --add-data "platform/*.json:platform" --add-data "lib/*.py:." --add-data "pldm_update_pkg_gen_ui.py:." --add-data "htu.txt:."
+
+	* STEP5. Move "pldm_update_pkg_gen" and "pldm_pkg_gen_app" to same folder and execute EXE
+		- Run command script
+			./pldm_update_pkg_gen <COMMAND LINE HERE>
+		- Run gui
+			./pldm_pkg_gen_app
+
+- Windows
+	* STEP1. Create "pldm_fwup_pkg_creator" EXE 
+		pyinstaller -F -w pldm_fwup_pkg_creator.py
+
+	* STEP2. Move "pldm_fwup_pkg_creator" from ./dist to ./
+		mv ./dist/pldm_fwup_pkg_creator.exe ./
+
+	* STEP3. Create "pldm_update_pkg_gen" EXE
+		pyinstaller -F pldm_update_pkg_gen.py --add-data ".\\platform\\*.json;platform" --add-data ".\\lib\\*.py;." --add-data "pldm_fwup_pkg_creator.exe;."
+
+	* STEP4. Create "pldm_pkg_gen_app" EXE
+		pyinstaller -F pldm_pkg_gen_app.py --add-data "platform\\*.json;platform" --add-data "lib\\*.py;." --add-data "pldm_update_pkg_gen_ui.py;." --add-data "htu.txt;."
+
+	* STEP5. Move "pldm_update_pkg_gen" and "pldm_pkg_gen_app" to same folder and execute EXE
+		- Run command script
+			pldm_update_pkg_gen.exe <COMMAND LINE HERE>
+		- Run gui
+			pldm_pkg_gen_app.exe
+
 {{ DEFINITIONS }}
 - <CMD_PREFIX>   Command's first word
 		 - Python:  python pldm_update_pkg_gen.py
@@ -36,7 +78,6 @@
 - <PACKAGE_NAME> Output pldm fw update package name.
 - <STAGE>        poc/evt/dvt/pvt/mp
 - <CUSTOM>       Words that could be customized, ex: version...
-- <CHECKSUM>     FW checksum
 - -->: input
 - <--: output
 
@@ -71,23 +112,23 @@
 		<-- (pex3) gt_swb_pex89000_<CUSTOM>.pldm
 	 
 		* Renesas isl69259
-		--> (vr0) <CMD_PREFIX> -p gt -b swb -s <STAGE> -c 0 -v "isl69259 <CUSTOM> <CHECKSUM>" -i <IMAGE>
-		<-- (vr0) gt_swb_isl69259_<CUSTOM>_<CHECKSUM>.pldm
+		--> (vr0) <CMD_PREFIX> -p gt -b swb -s <STAGE> -c 0 -v "isl69259 <CUSTOM>" -i <IMAGE>
+		<-- (vr0) gt_swb_isl69259_<CUSTOM>.pldm
 
-		--> (vr1) <CMD_PREFIX> -p gt -b swb -s <STAGE> -c 1 -v "isl69259 <CUSTOM> <CHECKSUM>" -i <IMAGE>
-		<-- (vr1) gt_swb_isl69259_<CUSTOM>_<CHECKSUM>.pldm
+		--> (vr1) <CMD_PREFIX> -p gt -b swb -s <STAGE> -c 1 -v "isl69259 <CUSTOM>" -i <IMAGE>
+		<-- (vr1) gt_swb_isl69259_<CUSTOM>.pldm
 
 		* MPS mp2971
-		--> (vr0) <CMD_PREFIX> -p gt -b swb -s <STAGE> -c 0 -v "mp2971 <CUSTOM> <CHECKSUM>" -i <IMAGE>
-		<-- (vr0) gt_swb_mp2971_<CUSTOM>_<CHECKSUM>.pldm
+		--> (vr0) <CMD_PREFIX> -p gt -b swb -s <STAGE> -c 0 -v "mp2971 <CUSTOM>" -i <IMAGE>
+		<-- (vr0) gt_swb_mp2971_<CUSTOM>.pldm
 
-		--> (vr1) <CMD_PREFIX> -p gt -b swb -s <STAGE> -c 1 -v "mp2971 <CUSTOM> <CHECKSUM>" -i <IMAGE>
-		<-- (vr1) gt_swb_mp2971_<CUSTOM>_<CHECKSUM>.pldm
+		--> (vr1) <CMD_PREFIX> -p gt -b swb -s <STAGE> -c 1 -v "mp2971 <CUSTOM>" -i <IMAGE>
+		<-- (vr1) gt_swb_mp2971_<CUSTOM>.pldm
 
 		* Infineon xdpe12284c
-		--> (vr0) <CMD_PREFIX> -p gt -b swb -s <STAGE> -c 0 -v "xdpe12284c <CUSTOM> <CHECKSUM>" -i <IMAGE>
-		<-- (vr0) gt_swb_xdpe12284c_<CUSTOM>_<CHECKSUM>.pldm
+		--> (vr0) <CMD_PREFIX> -p gt -b swb -s <STAGE> -c 0 -v "xdpe12284c <CUSTOM>" -i <IMAGE>
+		<-- (vr0) gt_swb_xdpe12284c_<CUSTOM>.pldm
 
-		--> (vr1) <CMD_PREFIX> -p gt -b swb -s <STAGE> -c 1 -v "xdpe12284c <CUSTOM> <CHECKSUM>" -i <IMAGE>
-		<-- (vr1) gt_swb_xdpe12284c_<CUSTOM>_<CHECKSUM>.pldm
+		--> (vr1) <CMD_PREFIX> -p gt -b swb -s <STAGE> -c 1 -v "xdpe12284c <CUSTOM>" -i <IMAGE>
+		<-- (vr1) gt_swb_xdpe12284c_<CUSTOM>.pldm
 

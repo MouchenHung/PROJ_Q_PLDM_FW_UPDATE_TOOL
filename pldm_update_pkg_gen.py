@@ -37,8 +37,8 @@ comm_sys = System_ctrl()
 platform_os = comm_sys.os_name.lower()
 
 # EXE file
-EXE_WIN_FILE = "pldm_fwup_pkg_creator.exe"
-EXE_LINUX_FILE = "./pldm_fwup_pkg_creator"
+EXE_WIN_FILE = resource_path("pldm_fwup_pkg_creator.exe")
+EXE_LINUX_FILE = resource_path("./pldm_fwup_pkg_creator")
 
 if platform_os == "windows":
     command_prefix = EXE_WIN_FILE
@@ -85,10 +85,12 @@ def APP_HEADER():
     msg_hdr_print("n", "========================================================")
 
 def PLAT_CheckVRChecksum(str, byte_num):
-    if len(str) != byte_num*2:
+    if len(str) < byte_num*2:
         return False
 
-    for c in str:
+    focus_str = str[0:byte_num*2]
+    print(focus_str)
+    for c in focus_str:
         try:
             int(c, 16)
         except:
@@ -217,13 +219,13 @@ if __name__ == '__main__':
             if select_comp_id_lst[i] in comp["CompID"]:
                 version_prefix = comp["Device"]
                 given_prefix = select_comp_version_lst[i].split(' ')[0]
-                given_suffix = select_comp_version_lst[i].split(' ')[-1]
+                given_subfix = select_comp_version_lst[i].split(' ')[1]
                 if given_prefix == version_prefix:
                     found_verify_flag = 1
 
                     if comp["CheckSum"] == "y":
-                        if PLAT_CheckVRChecksum(given_suffix, 4) == False:
-                            msg_hdr_print('e', "Component #" + str(select_comp_id_lst[i]) + " additional CheckSum string [" + given_suffix + "] at the end of version got error!")
+                        if PLAT_CheckVRChecksum(given_subfix, 4) == False:
+                            msg_hdr_print('e', "Component #" + str(select_comp_id_lst[i]) + " sub version string [" + given_subfix + "] need CheckSum in front!")
                             sys.exit(1)
                     break
         

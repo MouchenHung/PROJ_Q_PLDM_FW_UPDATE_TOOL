@@ -229,11 +229,7 @@ class Main(QMainWindow, pldm_update_pkg_gen_ui.UI_MainPage):
                 self.cb_compid.addItem(str(id) + "  " + device)
 
     def UI_Compid_Change(self):
-        if self.cb_compid.currentText() == "na":
-            self.le_compver.setText("na")
-            return
-        device_name = self.cb_compid.currentText().split('   ')[-1]
-        self.le_compver.setText(device_name + " ")
+        self.le_compver.setText("")
 
     def UI_Component_Insert(self):
         if self.cb_compid.currentText() == "na":
@@ -257,7 +253,8 @@ class Main(QMainWindow, pldm_update_pkg_gen_ui.UI_MainPage):
             return
 
         id_lst.append(cur_id)
-        version_lst.append(self.le_compver.text())
+        device_name = self.cb_compid.currentText().split('   ')[-1]
+        version_lst.append(device_name + " " + self.le_compver.text())
         img_lst.append(self.le_comppath.text())
 
         row = self.tw_complist.rowCount()
@@ -317,9 +314,14 @@ class Main(QMainWindow, pldm_update_pkg_gen_ui.UI_MainPage):
             log_record(LOG_FILE, "append", res[0])
 
         else:
-            self.lb_status.setText("Generate success! Please look at package file " + self.cb_platform.currentText() + "_" + self.cb_board.currentText() + "_" + self.le_compver.text().replace(" ", "_") + ".pldm")
+            if len(version_lst) == 1:
+                outputfile_name = self.cb_platform.currentText() + "_" + self.cb_board.currentText() + "_" + version_lst[0].replace(" ", "_") + ".pldm"
+            else:
+                outputfile_name = "default_package.pldm"
+
+            self.lb_status.setText("Generate success! Please look at package file " + outputfile_name)
             self.lb_status.setStyleSheet("color: rgb(0, 255, 0)")
-            print("Generate success! Please look at package file " + self.cb_platform.currentText() + "_" + self.cb_board.currentText() + "_" + self.le_compver.text().replace(" ", "_") + ".pldm")
+            print("Generate success! Please look at package file " + outputfile_name)
 
 def MAIN_APP():
     platform_cfg_lst = os.listdir(resource_path(PLATFORM_PATH))
