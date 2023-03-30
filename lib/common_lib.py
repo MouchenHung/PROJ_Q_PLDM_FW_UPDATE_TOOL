@@ -11,7 +11,7 @@ import sys, os, time, hashlib, platform
 class System_ctrl:
     def __init__(self):
         # OS
-        self.os_name = sys.platform
+        self.os_name = platform.system()
 
     def get_os(self):
         return self.os_name
