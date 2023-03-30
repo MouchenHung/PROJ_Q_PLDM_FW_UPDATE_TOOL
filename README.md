@@ -5,11 +5,30 @@ Package generator for pldm fw update.
     Tools that used to generate package image for pldm fw update.
 
 ### Latest rlease:
-    * pldm_update_pkg_gen: v1.5.0 - 2023/03/28
+    * pldm_pkg_gen_app: v1.0.1 - 2023/03/30
+    * pldm_update_pkg_gen: v1.5.1 - 2023/03/30
     * pldm_fwup_pkg_creator: v1.1.0 - 2023/03/21
 
 ### Version:
+**[pldm_pkg_gen_app]**
+- 1.0.1 - Fix version input rule - 2023/03/30
+  - Feature:
+  	- Hide prefix of component version.
+	- Follow pldm_update_pkg_gen v1.5.1
+  - Bug:
+  	- none
+- 1.0.0 - First commit - 2023/03/27
+  - Feature:
+  	- none
+  - Bug:
+  	- none
+
 **[pldm_update_pkg_gen]**
+- 1.5.1 - Fix bug - 2023/03/30
+  - Feature:
+  	- Modify VR CheckSum position from the end of version to second part.
+  - Bug:
+  	- Fix EXE file can't recognize some hidden import issue by changing pldm_fwup_pkg_creator from 'py' to 'exe'.
 - 1.5.0 - Modify version parsing - 2023/03/28
   - Feature:
   	- Modify version parsing and VR version should add CheckSum.
@@ -105,5 +124,6 @@ Please look for pldm package file [gt_swb_ast1030_???.pldm]
 ```
 
 ### Note
-- 1: More command examples, please look at CMD_EX.
+- More command examples, please look at CMD_EX.
+- Knowing how to generate EXE file, please look at CMD_EXE.
 
