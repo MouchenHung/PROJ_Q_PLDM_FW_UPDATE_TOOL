@@ -3,12 +3,12 @@
 import sys, subprocess, os
 
 import lib.json_cfg as json_lib
-from lib.common_lib import Common_msg, Common_file
+from lib.common_lib import Common_msg, Common_file, System_ctrl
 
 APP_NAME = "PLDM UPDATE PACKAGE GENERATOR"
 APP_AUTH = "Mouchen"
-APP_RELEASE_VER = "1.5.0"
-APP_RELEASE_DATE = "2023/03/28"
+APP_RELEASE_VER = "1.5.1"
+APP_RELEASE_DATE = "2023/03/30"
 
 PLATFORM_PATH = "./platform"
 CONFIG_FILE = "pldm_cfg.json"
@@ -24,6 +24,8 @@ STAGE_CFG = {
     "mp" : "MP",
 }
 
+DBG_EN = False
+
 # import common library
 comm_msg = Common_msg()
 msg_hdr_print = comm_msg.msg_hdr_print
@@ -31,6 +33,29 @@ comm_file = Common_file()
 is_file_exist = comm_file.is_file_exist
 resource_path = comm_file.resource_path
 get_md5_str_from_file = comm_file.get_md5_str_from_file_list
+comm_sys = System_ctrl()
+platform_os = comm_sys.os_name.lower()
+
+# EXE file
+EXE_WIN_FILE = "pldm_fwup_pkg_creator.exe"
+EXE_LINUX_FILE = "./pldm_fwup_pkg_creator"
+
+if platform_os == "windows":
+    command_prefix = EXE_WIN_FILE
+    if not is_file_exist(EXE_WIN_FILE):
+        print("Can't find exe file " + EXE_WIN_FILE)
+        sys.exit(1)
+elif platform_os == "linux":
+    command_prefix = EXE_LINUX_FILE
+    if not is_file_exist(EXE_LINUX_FILE):
+        print("Can't find exe file " + EXE_LINUX_FILE)
+        sys.exit(1)
+else:
+    print("Current os " + platform_os + " is not supported!")
+    sys.exit(1)
+
+if DBG_EN == True:
+    command_prefix = "python " + resource_path("pldm_fwup_pkg_creator.py")
 
 def APP_HELP():
     msg_hdr_print("n", "--------------------------------------------------------------------", "\n")
@@ -253,7 +278,7 @@ if __name__ == '__main__':
         pkg_file_name = package_name_lst[0]
         msg_hdr_print("n", "Using package file name [" + pkg_file_name + "].")
 
-    cmd_line = ["python", resource_path("pldm_fwup_pkg_creator.py"), pkg_file_name, CONFIG_FILE]
+    cmd_line = [command_prefix, pkg_file_name, CONFIG_FILE]
     for img in select_comp_img_lst:
         cmd_line.append(img)
 
