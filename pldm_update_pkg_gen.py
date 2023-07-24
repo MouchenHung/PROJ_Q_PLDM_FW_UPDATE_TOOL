@@ -40,22 +40,22 @@ platform_os = comm_sys.os_name.lower()
 EXE_WIN_FILE = resource_path("pldm_fwup_pkg_creator.exe")
 EXE_LINUX_FILE = resource_path("./pldm_fwup_pkg_creator")
 
-if platform_os == "windows":
-    command_prefix = EXE_WIN_FILE
-    if not is_file_exist(EXE_WIN_FILE):
-        print("Can't find exe file " + EXE_WIN_FILE)
-        sys.exit(1)
-elif platform_os == "linux":
-    command_prefix = EXE_LINUX_FILE
-    if not is_file_exist(EXE_LINUX_FILE):
-        print("Can't find exe file " + EXE_LINUX_FILE)
-        sys.exit(1)
-else:
-    print("Current os " + platform_os + " is not supported!")
-    sys.exit(1)
-
 if DBG_EN == True:
     command_prefix = resource_path("pldm_fwup_pkg_creator.py")
+else:
+    if platform_os == "windows":
+        command_prefix = EXE_WIN_FILE
+        if not is_file_exist(EXE_WIN_FILE):
+            print("Can't find exe file " + EXE_WIN_FILE)
+            sys.exit(1)
+    elif platform_os == "linux":
+        command_prefix = EXE_LINUX_FILE
+        if not is_file_exist(EXE_LINUX_FILE):
+            print("Can't find exe file " + EXE_LINUX_FILE)
+            sys.exit(1)
+    else:
+        print("Current os " + platform_os + " is not supported!")
+        sys.exit(1)
 
 def APP_HELP():
     msg_hdr_print("n", "--------------------------------------------------------------------", "\n")
