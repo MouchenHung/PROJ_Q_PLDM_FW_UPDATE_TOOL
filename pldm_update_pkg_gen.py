@@ -24,7 +24,7 @@ STAGE_CFG = {
     "mp" : "MP",
 }
 
-DBG_EN = False
+DBG_EN = True # Enable if there's no Sign EXE file
 
 # import common library
 comm_msg = Common_msg()
@@ -55,7 +55,7 @@ else:
     sys.exit(1)
 
 if DBG_EN == True:
-    command_prefix = "python " + resource_path("pldm_fwup_pkg_creator.py")
+    command_prefix = resource_path("pldm_fwup_pkg_creator.py")
 
 def APP_HELP():
     msg_hdr_print("n", "--------------------------------------------------------------------", "\n")
@@ -280,7 +280,11 @@ if __name__ == '__main__':
         pkg_file_name = package_name_lst[0]
         msg_hdr_print("n", "Using package file name [" + pkg_file_name + "].")
 
-    cmd_line = [command_prefix, pkg_file_name, CONFIG_FILE]
+    if DBG_EN == True:
+        cmd_line = ["python", command_prefix, pkg_file_name, CONFIG_FILE]
+    else:
+        cmd_line = [command_prefix, pkg_file_name, CONFIG_FILE]
+
     for img in select_comp_img_lst:
         cmd_line.append(img)
 
