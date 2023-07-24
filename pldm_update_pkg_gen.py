@@ -7,8 +7,8 @@ from lib.common_lib import Common_msg, Common_file, System_ctrl
 
 APP_NAME = "PLDM UPDATE PACKAGE GENERATOR"
 APP_AUTH = "Mouchen"
-APP_RELEASE_VER = "1.5.1"
-APP_RELEASE_DATE = "2023/03/30"
+APP_RELEASE_VER = "1.6"
+APP_RELEASE_DATE = "2023/07/24"
 
 PLATFORM_PATH = "./platform"
 CONFIG_FILE = "pldm_cfg.json"
