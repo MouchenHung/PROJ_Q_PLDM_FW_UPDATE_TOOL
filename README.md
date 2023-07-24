@@ -6,7 +6,7 @@ Package generator for pldm fw update.
 
 ### Latest rlease:
     * pldm_pkg_gen_app: v1.0.1 - 2023/03/30
-    * pldm_update_pkg_gen: v1.5.1 - 2023/03/30
+    * pldm_update_pkg_gen: v1.6 - 2023/07/24
     * pldm_fwup_pkg_creator: v1.1.0 - 2023/03/21
 
 ### Version:
@@ -24,6 +24,11 @@ Package generator for pldm fw update.
   	- none
 
 **[pldm_update_pkg_gen]**
+- 1.6.0 - Fix bug - 2023/07/24
+  - Feature:
+  	- Default debug mode enable and upload first version to OpenBIC.
+  - Bug:
+  	- Fix debug mode can't execute issue.
 - 1.5.1 - Fix bug - 2023/03/30
   - Feature:
   	- Modify VR CheckSum position from the end of version to second part.
@@ -74,15 +79,18 @@ Package generator for pldm fw update.
   	- Add MD5 at the end of package with 16bytes.
   - Bug: none
 
-### Required:
+### Requirement:
 - OS
   - Linux: support
   - Windows: support
 - Enviroment
   - python3
+  - Other library: Only required if DEBUG mode enable, not sure yet.
 
 ### Usage
-  - **STEP1. Create json config file**\
+  - **STEP0. Create project config file(only do once)**\
+  Create cfg_<project_name>_<board_name>.json to folder **platform**, which could refer to cfg_gt_swb.json.
+  - **STEP1. Generate pldm signed image**\
   Format: python3 pldm_update_pkg_gen.py -p **<project_name>** -b **<board_name>** -s **<project_stage>** -c **<component_id>** -v **<component_version>** -i **<component_image>**
     - project_name: Project name
     - board_name: Board name
@@ -95,8 +103,8 @@ mouchen@mouchen-System-Product-Name:~/$ python3 pldm_update_pkg_gen.py -p gt -b 
 ========================================================
 * APP name:    PLDM UPDATE PACKAGE GENERATOR
 * APP auth:    Mouchen
-* APP version: 1.5.0
-* APP date:    2023/03/28
+* APP version: 1.6
+* APP date:    2023/07/24
 * NOTE: This APP is based on pldm_fwup_pkg_creator.py
 ========================================================
 [STEP0] Calculate image(s) MD5
