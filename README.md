@@ -6,7 +6,7 @@ Package generator for pldm fw update.
 
 ### Latest rlease:
     * pldm_pkg_gen_app: v1.0.1 - 2023/03/30
-    * pldm_update_pkg_gen: v1.6 - 2023/07/24
+    * pldm_update_pkg_gen: v1.7.0 - 2023/07/27
     * pldm_fwup_pkg_creator: v1.1.0 - 2023/03/21
 
 ### Version:
@@ -24,6 +24,11 @@ Package generator for pldm fw update.
   	- none
 
 **[pldm_update_pkg_gen]**
+- 1.7.0 - Fix bug - 2023/07/27
+  - Feature:
+  	- Follow standard arg-parsing method, command format not change.
+  - Bug:
+  	- none.
 - 1.6.0 - Fix bug - 2023/07/24
   - Feature:
   	- Default debug mode enable and upload first version to OpenBIC.
@@ -99,12 +104,12 @@ Package generator for pldm fw update.
     - component_version: should follow project spec
     - component_image: binary image
 ```
-mouchen@mouchen-System-Product-Name:~/$ python3 pldm_update_pkg_gen.py -p gt -b swb -s pvt -c 2 -v "ast1030 ???" -i bic_image/xxxxx.bin 
+mouchen@mouchen-System-Product-Name:~/$ python pldm_update_pkg_gen.py -p gt -b swb -s pvt -c 2 -v "ast1030 ???" -i bic_image/xxxxx.bin 
 ========================================================
 * APP name:    PLDM UPDATE PACKAGE GENERATOR
 * APP auth:    Mouchen
-* APP version: 1.6
-* APP date:    2023/07/24
+* APP version: 1.7
+* APP date:    2023/07/27
 * NOTE: This APP is based on pldm_fwup_pkg_creator.py
 ========================================================
 [STEP0] Calculate image(s) MD5
